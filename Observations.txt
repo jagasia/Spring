@@ -1,0 +1,185 @@
+i) @Component annotation for bean classes
+ii) @Configuration annotation 
+and
+	@ComponentScan annotation	
+		for config class
+
+iii) in main method,
+	use ClassPathXMLApplicationContext 	only when .xml configuration file is used in the project
+	use AnnotationConfigApplicationContext 	only when config class is used in the project
+
+iv) use @Component annotation for 
+		BO class
+		Service class
+		Exception class
+		(any other class may also be required as per problem statement)
+
+v) super(msg);			in exception class constructor
+
+vi)
+@Configuration
+   14 @ComponentScan
+   15 public class ApplicationConfig {
+   16 	@Bean
+   17 	public Shop shop() {
+   18 		return new Shop();
+   19 	}
+   20 
+   21 	@Bean
+   22 	public Product product() {
+   23 		return new Product(shop());
+   24 	}
+   25 	
+   26 	@Bean
+   27 	public ProductBO productBO() {
+   28 		return new ProductBO();
+   29 	}
+   30 	
+   31 	@Bean
+   32 	public ProductService productService() {
+   33 		return new ProductService(productBO());
+   34 	}
+
+
+	use @Bean annotation to define any beans (similar to xml file <bean> tag) with name
+
+--------------------------
+vii) in LibraryApp
+	the skeleton "LibraryBo" class method 
+	public void validateStudentId(int stid) throws InvalidStudentIdException 
+	{
+		//Insert code here..
+		
+	}
+
+	But in the document, the method return type is boolean
+		(if student id is found in the stDetails then return true. else throw InvalidStudentIdException)
+-------------------------------------------------
+viii) DiagnosticService.java
+
+	bill data calculation		0/15.0 marks
+
+	modified the loop as below:
+	------------------------
+	for (String testName : testNames) {
+			for (String key : map.keySet()) {
+				if (testName.equals(key)) {
+					output += String.format("%s.%s\t", i++, key);
+				}
+			}
+		}
+
+	the loop should be based on the input test names order (which is in string array)
+		the loop was based on map.keySet() order so it was in alphabetic order. 
+
+ix) ACAD E-Learning (98.75)
+
+Error Msg: Avoid using if...else statements without curly braces
+Variable Name:
+Class Name: AssociateService
+
+	Solutions:	use curly braces and solve it
+-----------------------------------------------------------------------
+1) Stationary Bill
+
+Error Msg: Avoid unused imports such as 'com.cts.stationarybill.vo.MyCart'
+Variable Name:
+Class Name: Main
+
+Error Msg: Avoid unused imports such as 'com.cts.stationarybill.vo.Item'
+Variable Name:
+Class Name: Main
+
+Error Msg: Avoid unused local variables such as 'validator'.
+Variable Name: validator
+Class Name: Main
+
+Solution:	Remove unused imports and local variables mentioned in the feedback and check
+
+
+--------------------------------------------------------------
+2) Advertisement Booking (90/100)
+Error Msg: Avoid unused constructor parameters such as 'msg'.
+Variable Name: msg
+Class Name: InvalidDurationException
+	Reason:
+--------------
+package com.spring.exception;
+
+public class InvalidDurationException extends Exception {
+
+public InvalidDurationException(String msg){
+	// fill the code				*****wrong*****
+	System.out.println("Invalid Duration");
+}
+}
+-----------------------
+
+Error Msg: Variables should start with a lowercase character, 'TotalCost' starts with uppercase character.
+Variable Name: TotalCost
+Priority: High
+Class Name: AdvertisementService
+
+Reason:
+		double TotalCost = (duration * 200 * daysPerWeek) ;		******wrong********
+ --------------------------	This submission has lot of mistakes in annotation ComponentScan instead of Component
+ Grading and Feedback
+FeatureTest For Annotation - 43.0 / 50.0(Success)
+	* check whether the Component annotation is present above the AdvertisementBO class - 0.0 / 4.0
+	* check whether the Component annotation is present above the AdvertisementService class - 0.0 / 3.0
+	* check whether the Component annotation is present above the TelevisionChannel class - 4.0 / 4.0
+	* check whether the Configuration annotation is present above the ApplicationConfig class - 7.0 / 7.0
+	* check whether the ComponentScan annotation is present above the ApplicationConfig class - 7.0 / 7.0
+	* check whether the AdvertisementBO object is autowired inside the AdvertisementService via constructor - 7.0 / 7.0
+	* check whether the CustomerInfo object is autowired inside the Advertisement via constructor - 7.0 / 7.0
+	* check whether the Value annotation above the primeRate attribute in TelevisionChannel class - 7.0 / 7.0
+
+FunctionalTest  - 45.0 / 45.0(Success)
+	* Check the logic of book advertisement in AdvertisementBO class when time slot is 6pm-7pm - 4.0 / 4.0
+	* Check the logic of book advertisement in AdvertisementBO class when  time slot is 7pm-8pm - 4.0 / 4.0
+	* Check the logic of book advertisement in AdvertisementBO class when time slot is 8pmto9pm - 4.0 / 4.0
+	* Check the logic of book advertisement in AdvertisementBO class when time slot is  9pm-10pm - 4.0 / 4.0
+	* Check the logic of book advertisement in AdvertisementService class when time slot is 6pm-7pm - 4.0 / 4.0
+	* Check the logic of book advertisement in AdvertisementService class when time slot is 7pm-8pm - 4.0 / 4.0
+	* Check the logic of book advertisement in AdvertisementService class when time slot is 8pm-9pm - 4.0 / 4.0
+	* Check the logic of book advertisement in AdvertisementService class when time slot is 9pm-10pm - 3.0 / 3.0
+	* Check the logic of book advertisement in AdvertisementService class when duration is Invalid - 3.0 / 3.0
+	* Implementation of Main UI - 1.0 / 1.0
+	* Check whether the Main Menu is designed correctly when time slot is not valid - 2.0 / 2.0
+	* Check whether the Main Menu is designed correctly if time slot is 7pm-8pm - 2.0 / 2.0
+	* Check whether the Main Menu is designed correctly if time slot is 8pm-9pm - 2.0 / 2.0
+	* Check whether the Main Menu is designed correctly if time slot  is 9pm-10pm - 2.0 / 2.0
+	* Check whether the Main Menu is designed correctly if time slot is 11amto12am - 2.0 / 2.0
+
+Comments and best practices/standards - 2.5 / 5.0(Partial)
+
+ 
+
+----------------------------------------------------------------------------------
+
+other feedback:
+------
+Error Msg: Avoid using if statements without curly braces
+Variable Name:
+Class Name: CartBO
+
+Error Msg: Avoid unused imports such as 'com.cts.stationarybill.vo.MyCart'
+Variable Name:
+Class Name: Main
+
+Error Msg: Avoid unused local variables such as 'validator'.
+Variable Name: validator
+Class Name: Main
+
+Error Msg: Avoid using for statements without curly braces
+Variable Name:
+Class Name: CartService
+
+Error Msg: Avoid using if statements without curly braces
+Variable Name:
+Class Name: CartService
+
+Because  of above issues:
+	Comments and best practices/standards - 2.5 / 10.0(Partial)
+------------------------------------------------------------------------------
+
