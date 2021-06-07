@@ -177,3 +177,104 @@ remaining demos in Spring boot MVC	convention		(over configuration)
 Apache tomcat 9 supports 		Java 8			but not new versions	15, 16
 
 eclipse, has limitation of apache tomcat version
+
+
+we created  MVC project
+	so that java people work comfortably and independantly in java code
+	
+in spring boot, the same MVC project can be created little easily
+how?
+	if some one creates a project and configures all necessary steps and give the project to us, how easy it will be?
+
+	
+What is spring starter project?
+	this project is created by spring initializer	(web service)	that will ask you
+		group id
+		artifact id
+		java version
+		maven / kradle
+		jar / war
+		dependencies
+
+	after getting all these informations, spring initializer will create a project for us
+
+1) we have Spring tool suite:
+	File -> New -> Spring starter project
+
+2) we have eclipse:
+	go to website			http://start.spring.io
+		provide the below information:
+				group id
+		artifact id
+		java version
+		maven / kradle
+		jar / war
+		dependencies		(spring web)
+
+	create project downloaded to "downloads" folder. unzip to any location, import as "Existing maven project"
+
+
+
+creating a project in (Spring initializer service)
+	http://start.spring.io
+
+	download it
+
+unzip
+	move the folder to workspace
+
+import as "Existing maven project"
+
+
+"starter" dependencies combines lot of dependencies inside
+
+in this spring boot application:
+	i dont need "web.xml"
+	i dont need to configure dispatcher servlet here	(ready made)
+	i dont need to create "spring-servlet.xml" also	(THEN HOW WILL I SPECIFY "prefix" and "suffix")
+		we will configure this in "application.properties" file
+	
+			spring.mvc.view.prefix=/WEB-INF/jsp/
+			spring.mvc.view.suffix=.jsp
+
+	as required,
+		we have created "WEB-INF/jsp" folder under "webapp" folder
+		created index.jsp file also
+
+
+	now finally, lets define the controller classes "MyController"
+		usually we specify the "base package" in the component scan
+
+	but in spring boot, "convention over configuration"
+	what is the convention here?
+		create your controller classes under the base package.
+		what is the package?
+			the package that contains, application.java	(main method)
+
+		if project name is "spring-demo-1"
+		every "-" means next letter will be captialized
+
+		SpringDemo1Application.java		(this is our App.java that contain main method)
+
+	convention is we can create sub packages (but not change entire package)
+
+
+
+1) create a spring boot project
+2) application.properties
+			spring.mvc.view.prefix=/WEB-INF/jsp/
+			spring.mvc.view.suffix=.jsp
+3) create a controller class under base package or a sub package of base
+	
+4) open the application.java	(contain main method)
+	run as "spring boot app"
+	
+	or
+	right click project 		run as spring boot app
+
+check the port number and context 
+2021-06-07 16:11:41.618  INFO 14608 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+
+http://localhost:8080/
+
+
