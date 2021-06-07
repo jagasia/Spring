@@ -1,0 +1,179 @@
+we have learnt 
+	servlets and jsp
+
+	to create a dynamic web project
+
+	that can submit a form
+		to a servlet
+
+	servlet, JSP both are web components developed in java language that runs in server
+	
+first we submitted
+	FORM		(from html file)
+	same from JSP file
+
+	and found the advantage that JSP can allow us to write java code inside html code
+
+	<%	%>
+
+	in order to make the code more easy to read, we used custom tags like
+	JSTL	core
+
+	you know Spring core, AOP, Spring JDBC	(all these are not web application code. these can be done in any type of project)
+
+
+	we are moving to next level of learning web application
+
+	MVC projects
+		Model
+		View
+		Controller
+
+	each layer make it easy for different professionals to work independently on their layers
+
+		model
+			any code that defines data or access data		
+			ex:		Branch.java		BranchDao.java		BranchDaoImpl.java
+
+			packages related to model:		entity, dao		sometimes, model itself
+
+		view
+			any code that gets input or that displays output	is a view
+			ex:
+				jsp, html, servlet (sometimes, servlet produces output)
+
+		controller
+			in java, servlet is the controller	
+			we create an environment where a POJO class can be a controller (servlet will be underlying)
+			so far we created a servlet as a class that extends HttpServlet (so it is not POJO)
+			so we will learn to create POJO class in the place of controller
+
+that is the need for learning MVC now
+
+		view folder		(containing all JSP html files)
+		controller package	(where servlets are put in this package)
+		model package		(we put all dao entity classes)
+
+	we can call the above project as a MVC project. But there are guidelines defined in MVC pattern or f/w
+
+Spring MVC project
+	we can define beans		(some classes i create are declared as bean in bean.xml.  Sometimes, pre defined classes can also be defined as beans. Ex: 	DriverManagerDataSource, 	JdbcTemplate)
+
+what exactly we are going to do in spring mvc ?
+
+	1) we create a POJO class for controller
+
+		multiple methods. each method for one purpose. each method have an URL
+
+	what we did last session?
+		ADD	UPDATE	DELETE		(buttons)
+
+	For all three buttons, the form submitted to 1 servlet.
+	in that servlet, we used
+		switch case
+
+	that is not nice. Instead, why not we have 3 different methods???????????
+
+
+a controller is a pojo class, that is going to define separate methods for each purpose. each method accessed using different url
+
+	How is it possible?
+		suppose, the servlet is accessed by a URL
+		http://localhost:8080/projectname/add
+		http://localhost:8080/projectname/edit
+		http://localhost:8080/projectname/delete
+
+
+	all these urls are received by a Servlet in the background, then that servlet
+		understand the url as 
+			add
+			update
+			delete
+	and decide which method to be executed
+
+		then THAT SERVLET IS CALLED AS "Dispatcher Servlet"
+
+	This dispatcher servlet is not created by me. It is already there in Spring MVC framework
+
+	because of this dispatcher servlet, I AM NOT GOING TO CREATE ANY SERVLETS ANYMORE. I am going to create POJO classes that acts as a controller
+
+	so in MVC project, an URL is not meant for a page. An URL is meant for a method in the controller class
+
+			http://localhost:8080/projectname/add
+	here, "add" is the url that does not mean a page. it means a url mapped in a method in the controller class
+
+1 demo for Spring MVC			configuration
+remaining demos in Spring boot MVC	convention		(over configuration)
+
+
+1) dynamic web project
+	web.xml				deployment descriptor file
+		to add web.xml file in an existing project, right click -> add deployment descriptor stub
+
+	this will create necessary folders like "WEB-INF"
+
+	if we create maven project it will not create this WEB-INF folder
+		we will have to create manually
+
+2) convert this project into maven project
+	right click project -> configure -> convert to maven project
+
+3) in pom.xml
+	we need to add dependency for spring mvc
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+4) CONFIGURE web.xml file
+	so that any request comes to our project, is received by a dispatcher servlet
+
+	
+5) in spring, a configuration file can be created like bean.xml	or applicationContext.xml or anything
+
+	in web.xml, the dispatcher servlet name is "spring" means, then this bean.xml file name should be
+		spring-servlet.xml			-servlet.xml is common
+
+6) spring-servlet.xml
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:mvc="http://www.springframework.org/schema/mvc"  
+    xsi:schemaLocation="  
+        http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/context  
+        http://www.springframework.org/schema/context/spring-context.xsd  
+        http://www.springframework.org/schema/mvc  
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">  
+  
+    <!-- Provide support for component scanning -->  
+    <context:component-scan base-package="com.cts.jag" />  
+  
+    <!--Provide support for conversion, formatting and validation -->  
+    <mvc:annotation-driven/>  
+  <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+</beans>  
+	configure the prefix and suffix
+		prefix		/WEB-INF/jsp/
+		suffix		.jsp
+
+	if say "index"		in controller, then it is prefixed and suffixed as
+			/WEB-INF/jsp/index.jsp
+
+	that means, i have to create jsp folder inside WEB-INF
+
+7) create a folder "jsp" under WEB-INF
+8) add your jsp pages to this folder
+9) create a class "MyController" under package specified in the component-scan (sub packages of base package are allowed)
+
+
+Apache tomcat 9 supports 		Java 8			but not new versions	15, 16
+
+eclipse, has limitation of apache tomcat version
